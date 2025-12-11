@@ -1,0 +1,20 @@
+<!-- public/forgot.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Recuperar contraseña</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="card">
+    <h2>Recuperar contraseña</h2>
+    <form id="forgotForm" action="../backend/forgot_password.php" method="POST">
+      <label>Ingresa tu correo</label>
+      <input type="email" name="email" id="email" required>
+      <button type="submit">Enviar enlace</button>
+    </form>
+    <p><a href="index.html">Volver al login</a></p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- public/register.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Registro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="card">
+    <h2>Registro</h2>
+    <form id="registerForm" action="../backend/register.php" method="POST">
+      <label>Nombre</label>
+      <input type="text" name="name" id="name" required>
+      <label>Email</label>
+      <input type="email" name="email" id="email" required>
+      <label>Contraseña</label>
+      <input type="password" name="password" id="password" required>
+      <label>Confirmar contraseña</label>
+      <input type="password" name="password_confirm" id="password_confirm" required>
+      <button type="submit">Registrarme</button>
+    </form>
+    <p><a href="index.html">Volver al login</a></p>
+    <div id="msg"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

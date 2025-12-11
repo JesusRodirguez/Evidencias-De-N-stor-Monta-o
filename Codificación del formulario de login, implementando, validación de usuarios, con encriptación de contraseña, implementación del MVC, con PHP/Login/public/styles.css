@@ -1,0 +1,53 @@
+/* public/styles.css */
+:root{
+  --bg:#f4f6f8;
+  --card:#fff;
+  --accent:#0b72ff;
+  --text:#222;
+}
+
+*{box-sizing:border-box}
+body{
+  font-family: Inter, system-ui, Arial;
+  background: var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  margin:0;
+}
+
+.card{
+  background:var(--card);
+  padding:24px;
+  border-radius:8px;
+  width:360px;
+  box-shadow:0 8px 24px rgba(15,15,15,0.08);
+}
+
+.card h2{margin:0 0 12px; color:var(--text)}
+label{display:block; margin-top:10px; font-size:14px; color:#444}
+input[type="text"], input[type="email"], input[type="password"]{
+  width:100%;
+  padding:10px 12px;
+  margin-top:6px;
+  border-radius:6px;
+  border:1px solid #ddd;
+  font-size:14px;
+}
+
+button{
+  margin-top:16px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+p{font-size:14px; margin-top:12px; color:#666; text-align:center}
+a{color:var(--accent); text-decoration:none}
+#msg{margin-top:10px; color:red}
