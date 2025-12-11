@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="formulario">
+        <div id="Valor">
+            <h1>Solo se permiten numeros</h1>
+        </div>
+        <div class="grupo">
+            <label for="MontoDeuda">Monto de la Deuda :</label>
+            <input type="text" id="monto" placeholder="Escribe el monto de la Deuda,porfavor">
+        </div>
+
+        <div class="grupo">
+            <label for="interesAunual">Tasa de interes (% Anual) :</label>
+            <input type="text" id="tasaInteres" placeholder="Solo escribe el numero">
+        </div>
+
+         <div class="grupo">
+            <label for="Meses">Plazo Meses :</label>
+            <input type="text" id="plazo" placeholder="El numero de meses
+            ">
+        </div>
+
+        <div class="boton">
+            <button type="button" onclick="registrarMora()">Calcular</button>
+        </div>
+        <div id="resultado"></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
