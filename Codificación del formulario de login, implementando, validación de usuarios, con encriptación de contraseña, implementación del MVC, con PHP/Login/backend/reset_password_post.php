@@ -1,5 +1,4 @@
 <?php
-// backend/reset_password_post.php
 require_once __DIR__ . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -16,6 +15,7 @@ if ($password === '' || strlen($password) < 6 || $password !== $password_confirm
     exit;
 }
 
+// BUSCAR TOKEN (USANDO reset_expires CORRECTAMENTE)
 $stmt = $pdo->prepare("SELECT id, reset_expires FROM users WHERE reset_token = ?");
 $stmt->execute([$token]);
 $user = $stmt->fetch();
@@ -38,4 +38,3 @@ $stmt = $pdo->prepare("UPDATE users SET password_hash = ?, reset_token = NULL, r
 $stmt->execute([$hash, $user['id']]);
 
 echo "Contraseña actualizada. Ahora puedes iniciar sesión.";
-
