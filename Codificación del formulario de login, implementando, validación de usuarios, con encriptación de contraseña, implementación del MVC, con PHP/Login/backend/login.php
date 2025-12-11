@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . '/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../public/index.html');
+    header('Location: ../public/login.html');
     exit;
 }
 
@@ -12,7 +12,8 @@ $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') {
-    echo "Credenciales inválidas.";
+    $msg = urlencode("Credenciales inválidas");
+    header("Location: ../public/login.html?error=$msg");
     exit;
 }
 
@@ -21,7 +22,8 @@ $stmt->execute([$email]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password_hash'])) {
-    echo "Email o contraseña incorrectos.";
+    $msg = urlencode("Email o contraseña incorrectos");
+    header("Location: ../public/login.html?error=$msg");
     exit;
 }
 
@@ -29,5 +31,6 @@ if (!$user || !password_verify($password, $user['password_hash'])) {
 $_SESSION['user_id'] = $user['id'];
 $_SESSION['user_name'] = $user['name'];
 
-echo "OK";
-
+// REDIRECCIONAR A DASHBOARD
+header('Location: ../public/dashboard.html');
+exit;

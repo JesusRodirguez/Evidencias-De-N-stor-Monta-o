@@ -9,7 +9,7 @@ define('DB_PASS', '');
 // Para el envío de correos
 define('FROM_EMAIL', 'noreply@tudominio.com');
 define('FROM_NAME', 'Auth Demo');
-define('BASE_URL', 'http://localhost/proyecto-auth/public'); // cambia según tu ruta pública
+define('BASE_URL', 'http://localhost/Login/backend');
 
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

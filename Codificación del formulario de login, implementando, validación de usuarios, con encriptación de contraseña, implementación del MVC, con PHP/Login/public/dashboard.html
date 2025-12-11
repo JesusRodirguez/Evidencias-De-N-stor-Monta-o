@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Administrativo</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f5f7;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: #151a2d;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .menu a {
+      padding: 14px 25px;
+      display: block;
+      color: #dcdcdc;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    .menu a:hover {
+      background: #1e2440;
+      color: white;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .logout-btn {
+      background: #ff4757;
+      padding: 8px 16px;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    /* CONTENIDO */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .container {
+      margin: 25px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 3px 12px rgba(0,0,0,0.12);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #f0f0f0;
+      text-align: left;
+    }
+
+    tr:hover {
+      background: #f9f9f9;
+    }
+
+    .btn-delete {
+      padding: 6px 12px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2>⚡ Admin Panel</h2>
+
+    <div class="menu">
+      <a href="#" onclick="mostrar('usuarios')">👥 Usuarios</a>
+      <a href="#" onclick="mostrar('productos')">📦 Productos</a>
+      <a href="#" onclick="mostrar('ventas')">💰 Ventas</a>
+      <a href="#" onclick="mostrar('ajustes')">⚙️ Ajustes</a>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <h2 id="tituloActual">Usuarios</h2>
+      <a href="../backend/logout.php" class="logout-btn">Cerrar sesión</a>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="container" id="contenido">
+
+      <!-- TABLA USUARIOS -->
+      <div id="seccionUsuarios">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaUsuarios">
+            <tr><td colspan="4">Cargando usuarios...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- SECCION PRODUCTOS -->
+      <div id="seccionProductos" style="display:none;">
+        <h3>📦 Gestión de Productos</h3>
+        <p>Aquí puedes listar, agregar o editar productos.</p>
+      </div>
+
+      <!-- SECCION VENTAS -->
+      <div id="seccionVentas" style="display:none;">
+        <h3>💰 Reporte de Ventas</h3>
+        <p>Gráficos y reportes de ventas aparecerán aquí.</p>
+      </div>
+
+      <!-- SECCION AJUSTES -->
+      <div id="seccionAjustes" style="display:none;">
+        <h3>⚙️ Configuración General</h3>
+        <p>Ajustes de la cuenta y preferencias del sistema.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+/* CAMBIAR ENTRE SECCIONES */
+function mostrar(seccion) {
+  const secciones = ["Usuarios", "Productos", "Ventas", "Ajustes"];
+
+  document.getElementById("tituloActual").textContent = seccion.charAt(0).toUpperCase() + seccion.slice(1);
+
+  document.getElementById("seccionUsuarios").style.display = "none";
+  document.getElementById("seccionProductos").style.display = "none";
+  document.getElementById("seccionVentas").style.display = "none";
+  document.getElementById("seccionAjustes").style.display = "none";
+
+  document.getElementById("seccion" + seccion.charAt(0).toUpperCase() + seccion.slice(1)).style.display = "block";
+}
+
+/* CARGAR USUARIOS */
+document.addEventListener("DOMContentLoaded", async () => {
+  const tabla = document.getElementById("tablaUsuarios");
+
+  const response = await fetch("http://localhost/Login/backend/getUsers.php");
+  const data = await response.json();
+
+  if (data.length === 0) {
+    tabla.innerHTML = `<tr><td colspan="4">No hay usuarios registrados.</td></tr>`;
+    return;
+  }
+
+  tabla.innerHTML = "";
+
+  data.forEach(user => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${user.id}</td>
+      <td>${user.name}</td>
+      <td>${user.email}</td>
+      <td>
+        <button class="btn-delete" onclick="deleteUser(${user.id})">Eliminar</button>
+      </td>
+    `;
+
+    tabla.appendChild(tr);
+  });
+});
+
+/* ELIMINAR USUARIO */
+async function deleteUser(id) {
+  if (!confirm("¿Seguro que deseas eliminar este usuario?")) return;
+
+  const response = await fetch("http://localhost/Login/backend/deleteUser.php?id=" + id);
+
+  const result = await response.text();
+
+  if (result === "OK") {
+    alert("Usuario eliminado");
+    location.reload();
+  } else {
+    alert("Error: " + result);
+  }
+}
+</script>
+
+</body>
+</html>

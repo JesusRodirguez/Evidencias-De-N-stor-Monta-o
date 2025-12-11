@@ -1,44 +1,14 @@
-// public/app.js
-document.addEventListener('DOMContentLoaded', () => {
-  const registerForm = document.getElementById('registerForm');
-  if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
-      const name = registerForm.name.value.trim();
-      const email = registerForm.email.value.trim();
-      const p = registerForm.password.value;
-      const pc = registerForm.password_confirm.value;
-      const namePattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const mensaje = document.getElementById("mensaje");
 
-      if (!namePattern.test(name)) {
-        alert('Nombre inválido. Solo letras y espacios.');
-        e.preventDefault(); return;
-      }
-      if (!validateEmail(email)) { alert('Email inválido'); e.preventDefault(); return; }
-      if (p.length < 6) { alert('La contraseña debe tener al menos 6 caracteres'); e.preventDefault(); return; }
-      if (p !== pc) { alert('Las contraseñas no coinciden'); e.preventDefault(); return; }
-    });
-  }
+    if (email === "" || password === "") {
+        e.preventDefault();
+        mensaje.textContent = "Todos los campos son obligatorios";
+        mensaje.style.color = "red";
+        return;
+    }
 
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      const email = loginForm.email.value.trim();
-      const p = loginForm.password.value;
-      if (!validateEmail(email)){ alert('Email inválido'); e.preventDefault(); return; }
-      if (p.length < 1){ alert('Escribe la contraseña'); e.preventDefault(); return; }
-    });
-  }
-
-  const forgotForm = document.getElementById('forgotForm');
-  if (forgotForm) {
-    forgotForm.addEventListener('submit', (e) => {
-      const email = forgotForm.email.value.trim();
-      if (!validateEmail(email)){ alert('Email inválido'); e.preventDefault(); return; }
-    });
-  }
+    // Si pasa la validación, el formulario se envía normal con action
 });
-
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email.toLowerCase());
-}
